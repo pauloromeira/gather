@@ -6,8 +6,8 @@ class LocalSpider(scrapy.Spider):
     name = "local"
     allowed_domains = ['localhost']
     start_urls = (
-            'http://localhost:8000',
+            'http://localhost:8765',
     )
 
     def parse(self, response):
-        pass
+        import ipdb; ipdb.set_trace()
