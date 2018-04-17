@@ -4,9 +4,9 @@ import scrapy
 
 class LocalSpider(scrapy.Spider):
     name = "local"
-    allowed_domains = ["localhost"]
+    allowed_domains = ['httbin.org']
     start_urls = (
-        'http://www.localhost/',
+        'https://httpbin.org/ip',
     )
 
     def parse(self, response):
