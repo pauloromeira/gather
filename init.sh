@@ -1,6 +1,6 @@
-git clone -b '1.1.3' https://github.com/scrapy/scrapy.git packages/scrapy
-git clone -b 'twisted-16.4.1' https://github.com/twisted/twisted.git packages/twisted
-git clone https://github.com/rmax/scrapy-inline-requests packages/scrapy-inline-requests
+git clone --depth=1 -b '1.1.3' --single-branch https://github.com/scrapy/scrapy.git packages/scrapy
+git clone --depth=1 -b 'twisted-16.4.1' --single-branch https://github.com/twisted/twisted.git packages/twisted
+git clone --depth=1 -b 'master' --single-branch https://github.com/rmax/scrapy-inline-requests packages/scrapy-inline-requests
 
 pyenv uninstall gather
 pyenv virtualenv 2.7.14 gather
