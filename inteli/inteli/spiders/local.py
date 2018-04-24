@@ -4,6 +4,8 @@ import scrapy
 from scrapy.http import Request
 from inteli.tools import BulkRequest
 
+from inline_requests import inline_requests
+
 
 class LocalSpider(scrapy.Spider):
     name = "local"
@@ -20,18 +22,14 @@ class LocalSpider(scrapy.Spider):
         yield Request(response.urljoin(link), callback=self.page1)
 
 
+    @inline_requests
     def page1(self, response):
         print('******** ' + response.xpath('//title/text()').extract_first())
 
         links = response.xpath('//a/@href').extract()
-        requests = []
-        for link in links:
-            requests.append(Request(response.urljoin(link),
-                                    callback=self.other_pages))
+        # links.append('http://localhost:9999')
+        requests = [Request(response.urljoin(link)) for link in links]
 
-        yield BulkRequest(requests, callback=self.other_pages)
-
-
-    def other_pages(self, response):
-        for response in response.responses:
+        bulk_response = yield BulkRequest(requests)
+        for response in bulk_response.responses:
             print('******** ' + response.xpath('//title/text()').extract_first())

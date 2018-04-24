@@ -2,7 +2,7 @@ from scrapy.http import Request, Response
 
 
 class BulkRequest(Request):
-    def __init__(self, requests, callback):
+    def __init__(self, requests, callback=None):
         super(BulkRequest, self).__init__(url=requests[0].url,
                                           dont_filter=True,
                                           callback=callback)
