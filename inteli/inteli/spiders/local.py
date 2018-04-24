@@ -2,6 +2,7 @@
 import scrapy
 
 from scrapy.http import Request
+from inline_requests import inline_requests
 
 
 class LocalSpider(scrapy.Spider):
@@ -17,12 +18,14 @@ class LocalSpider(scrapy.Spider):
         link = response.xpath('//a/@href').extract_first()
         yield Request(response.urljoin(link), callback=self.page1)
 
+    @inline_requests
     def page1(self, response):
         print('******** ' + response.xpath('//title/text()').extract_first())
 
         links = response.xpath('//a/@href').extract()
         for link in links:
-            yield Request(response.urljoin(link), callback=self.other_pages)
+            response = yield Request(response.urljoin(link))
+            self.other_pages(response)
 
     def other_pages(self, response):
         print('******** ' + response.xpath('//title/text()').extract_first())
